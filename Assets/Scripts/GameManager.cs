@@ -23,10 +23,13 @@ public class GameManager : MonoBehaviour
 
     private string filePath = Application.streamingAssetsPath + "/PlantCount.json";
 
+    public bool isPaused;
+
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        isPaused = true;
         Time.timeScale = 0;
         LoadJsonValue();
     }
@@ -76,12 +79,14 @@ public class GameManager : MonoBehaviour
     public void PlayGame()
     {
         welcomeUI.SetActive(false);
+        isPaused = false;
         Time.timeScale = 1;
     }
 
     public void PauseGame() 
     {
         welcomeUI.SetActive(true);
+        isPaused = true;
         Time.timeScale = 0;
     }
 }

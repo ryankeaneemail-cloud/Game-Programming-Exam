@@ -11,10 +11,13 @@ public class PlayerAttack : MonoBehaviour
     public KeyCode attackKey;
     private float attackInterval;
     public LayerMask hitMask;
+
+    public AudioClip attackClip;
+    AudioSource attackSource;
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 Collider2D[] enemyCollider = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, hitMask);
                 GetComponent<Animator>().SetTrigger("Attack");
-
+                attackSource.PlayOneShot(attackClip);
                 foreach (Collider2D enemyObject in enemyCollider)
                 {
                     Debug.Log("HitEnemy");

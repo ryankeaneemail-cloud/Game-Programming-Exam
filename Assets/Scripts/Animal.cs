@@ -26,6 +26,8 @@ public class Animal : MonoBehaviour
     AudioSource animalAudioSource;
 
     public bool isAttacked;
+
+    float soundInterval;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,14 +76,15 @@ public class Animal : MonoBehaviour
 
     void RandomSoundLoop()
     {
-        float interval = Random.Range(soundIntervalRange / 2, soundIntervalRange);
+        if (GameManager.instance.isPaused) return;
 
-        interval -= Time.deltaTime;
+        soundInterval -= Time.deltaTime;
 
-        if(interval <= 0f)
+        if (soundInterval <= 0f)
         {
+            Debug.Log("Play Sound");
             animalAudioSource.PlayOneShot(animalSound);
-            interval = Random.Range(0, soundIntervalRange);
+            soundInterval = Random.Range(soundIntervalRange / 2, soundIntervalRange);
         }
     }
 

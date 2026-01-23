@@ -6,6 +6,13 @@ public class PlayerDig : MonoBehaviour
 {
     public KeyCode digKey;
     private Plant nearbyPlant;
+    public AudioClip digClip;
+    AudioSource digSource;
+
+    private void Start()
+    {
+        digSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -34,6 +41,7 @@ public class PlayerDig : MonoBehaviour
     {
         if (Input.GetKeyDown(digKey) && nearbyPlant != null)
         {
+            digSource.PlayOneShot(digClip);
             Debug.Log("Digging plant");
             GetComponent<Animator>().SetTrigger("Dig");
             nearbyPlant.HarvestPlant();

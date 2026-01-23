@@ -17,13 +17,17 @@ public class EnemyAttack : MonoBehaviour
     private Animator animator;
 
     private Transform player;
-    
+
+    public AudioClip attackClip;
+    AudioSource attackSource;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         health = GetComponent<EnemyHealth>();
         movement = GetComponent<EnemyMovement>();
+        attackSource = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -39,7 +43,7 @@ public class EnemyAttack : MonoBehaviour
 
         float dist = Vector2.Distance(transform.position, player.position);
         if (dist > movement.attackPlayerRange) return;
-
+        attackSource.PlayOneShot(attackClip);
         if (timer <= 0)
         {
                 Collider2D[] playerCollider = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, hitMask);
